@@ -31,7 +31,7 @@ public class CuatroEnLinea {
 	 */
 	public int contarFilas() {
 		
-		return 4;
+		return 6;
 	}
 
 	/**
