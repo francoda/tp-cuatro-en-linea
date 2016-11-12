@@ -41,7 +41,6 @@ public class CuatroEnLinea {
 	 * post: devuelve la cantidad máxima de fichas que se pueden apilar en el tablero.
 	 */
 	public int contarFilas() {
-		
 		return tablero.length;
 	}
 
@@ -49,7 +48,6 @@ public class CuatroEnLinea {
 	 * post: devuelve la cantidad máxima de fichas que se pueden alinear en el tablero.
 	 */
 	public int contarColumnas() {
-		
 		return tablero[0].length;
 	}
 
@@ -62,7 +60,6 @@ public class CuatroEnLinea {
 	 * @param columna
 	 */
 	public Casillero obtenerCasillero(int fila, int columna) {
-		
 		return tablero[fila-1][columna-1];
 	}
 	
