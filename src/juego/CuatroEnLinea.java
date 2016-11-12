@@ -10,6 +10,9 @@ package juego;
  */
 public class CuatroEnLinea {
 
+	private Casillero[][] tablero;
+	private boolean esPrimerJugador;
+	
 	/**
 	 * pre : 'filas' y 'columnas' son mayores o iguales a 4.
 	 * post: empieza el juego entre el jugador que tiene fichas rojas, identificado como 
@@ -24,22 +27,28 @@ public class CuatroEnLinea {
 	 */
 	public CuatroEnLinea(int filas, int columnas, String jugadorRojo, String jugadorAmarillo) {
 
+		tablero = new Casillero[filas][columnas];
+		
+		for (int i=0;i<filas;i++) {
+			for (int j=0;j<columnas;j++) {
+				tablero[i][j] = Casillero.VACIO;
+			}
+		}
+		
 	}
 
 	/**
 	 * post: devuelve la cantidad máxima de fichas que se pueden apilar en el tablero.
 	 */
 	public int contarFilas() {
-		
-		return 6;
+		return tablero.length;
 	}
 
 	/**
 	 * post: devuelve la cantidad máxima de fichas que se pueden alinear en el tablero.
 	 */
 	public int contarColumnas() {
-		
-		return 4;
+		return tablero[0].length;
 	}
 
 	/**
@@ -51,8 +60,7 @@ public class CuatroEnLinea {
 	 * @param columna
 	 */
 	public Casillero obtenerCasillero(int fila, int columna) {
-		
-		return Casillero.VACIO;
+		return tablero[fila-1][columna-1];
 	}
 	
 	/**
@@ -63,6 +71,22 @@ public class CuatroEnLinea {
 	 * @param columna
 	 */
 	public void soltarFicha(int columna) {
+		int ultimaFilaVacia = tablero.length -1;
+		
+		while (tablero[ultimaFilaVacia][columna-1] != Casillero.VACIO &&
+				ultimaFilaVacia >= 0) {
+			ultimaFilaVacia--;
+		}
+		
+		if (ultimaFilaVacia >= 0) {
+			if (esPrimerJugador) {
+				tablero[ultimaFilaVacia][columna-1] = Casillero.ROJO;
+			} else {
+				tablero[ultimaFilaVacia][columna-1] = Casillero.AMARILLO;
+			}
+			esPrimerJugador = !esPrimerJugador;
+		}
+	
 		
 	}
 	
