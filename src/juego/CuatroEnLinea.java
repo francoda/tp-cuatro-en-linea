@@ -86,8 +86,6 @@ public class CuatroEnLinea {
 			}
 			esPrimerJugador = !esPrimerJugador;
 		}
-	
-		
 	}
 	
 	/**
