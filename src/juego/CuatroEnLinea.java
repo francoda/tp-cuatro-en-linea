@@ -46,10 +46,7 @@ public class CuatroEnLinea {
 	 * post: devuelve la cantidad máxima de fichas que se pueden apilar en el tablero.
 	 */
 	public int contarFilas() {
-<<<<<<< HEAD
-=======
-		
->>>>>>> Se ingresan las fichas
+
 		return tablero.length;
 	}
 
@@ -57,10 +54,7 @@ public class CuatroEnLinea {
 	 * post: devuelve la cantidad máxima de fichas que se pueden alinear en el tablero.
 	 */
 	public int contarColumnas() {
-<<<<<<< HEAD
-=======
-		
->>>>>>> Se ingresan las fichas
+
 		return tablero[0].length;
 	}
 
@@ -73,10 +67,7 @@ public class CuatroEnLinea {
 	 * @param columna
 	 */
 	public Casillero obtenerCasillero(int fila, int columna) {
-<<<<<<< HEAD
-=======
-		
->>>>>>> Se ingresan las fichas
+
 		return tablero[fila-1][columna-1];
 	}
 	
@@ -93,9 +84,7 @@ public class CuatroEnLinea {
 		while (ultimaFilaVacia > 0 &&tablero[ultimaFilaVacia][columna] != Casillero.VACIO)  {
 			ultimaFilaVacia--;
 		}
-<<<<<<< HEAD
-=======
-		
+
 		if (ultimaFilaVacia >= 0 && tablero[0][columna]==Casillero.VACIO) {
 			if (esPrimerJugador) {
 				tablero[ultimaFilaVacia][columna] = Casillero.ROJO;
@@ -107,12 +96,7 @@ public class CuatroEnLinea {
 			ultimoCasillero[1] =columna;			
 			esPrimerJugador = !esPrimerJugador;
 		}
-<<<<<<< HEAD
-	
->>>>>>> Se ingresan las fichas
-=======
->>>>>>> francoda
-		
+
 		if (ultimaFilaVacia >= 0) {
 			if (esPrimerJugador) {
 				tablero[ultimaFilaVacia][columna-1] = Casillero.ROJO;
