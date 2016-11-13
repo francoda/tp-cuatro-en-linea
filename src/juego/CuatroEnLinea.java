@@ -70,7 +70,7 @@ public class CuatroEnLinea {
 	
 	/**
 	 * pre : el juego no terminó, columna está en el intervalo [1, contarColumnas()]
-	 * 		 y aún queda un Casillero.VACIO en la columna indicada. 
+	 * 		 y aún queda uxn Casillero.VACIO en la columna indicada. 
 	 * post: deja caer una ficha en la columna indicada.
 	 * 
 	 * @param columna
