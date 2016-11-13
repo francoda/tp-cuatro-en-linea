@@ -12,6 +12,9 @@ public class CuatroEnLinea {
 
 	private Casillero[][] tablero;
 	private boolean esPrimerJugador;
+	private String jugadorRojo;
+	private String jugadorAmarillo;
+	private int[] ultimoCasillero = {0,0};
 	
 	/**
 	 * pre : 'filas' y 'columnas' son mayores o iguales a 4.
@@ -35,6 +38,8 @@ public class CuatroEnLinea {
 			}
 		}
 		
+		this.jugadorRojo = jugadorRojo;
+		this.jugadorAmarillo = jugadorAmarillo;
 	}
 
 	/**
@@ -72,20 +77,23 @@ public class CuatroEnLinea {
 	 */
 	public void soltarFicha(int columna) {
 		int ultimaFilaVacia = tablero.length -1;
-		
-		while (tablero[ultimaFilaVacia][columna-1] != Casillero.VACIO &&
-				ultimaFilaVacia >= 0) {
+		columna-=1;
+		while (ultimaFilaVacia > 0 &&tablero[ultimaFilaVacia][columna] != Casillero.VACIO)  {
 			ultimaFilaVacia--;
 		}
 		
-		if (ultimaFilaVacia >= 0) {
+		if (ultimaFilaVacia >= 0 && tablero[0][columna]==Casillero.VACIO) {
 			if (esPrimerJugador) {
-				tablero[ultimaFilaVacia][columna-1] = Casillero.ROJO;
+				tablero[ultimaFilaVacia][columna] = Casillero.ROJO;
+				
 			} else {
-				tablero[ultimaFilaVacia][columna-1] = Casillero.AMARILLO;
+				tablero[ultimaFilaVacia][columna] = Casillero.AMARILLO;
 			}
+			ultimoCasillero[0] = ultimaFilaVacia;
+			ultimoCasillero[1] =columna;			
 			esPrimerJugador = !esPrimerJugador;
 		}
+		
 	}
 	
 	/**
@@ -93,8 +101,20 @@ public class CuatroEnLinea {
 	 * 		 ganó o no existen casilleros vacíos.
 	 */
 	public boolean termino() {
+		int i=0;
+		boolean termino=false;
 		
-		return false;
+		//verifica la ultima fila por empate		
+		while (i<tablero[0].length && tablero[0][i]!=Casillero.VACIO){			
+			if (i==tablero[0].length-1){
+				termino=!termino;
+			}
+			i++;
+		}
+		
+		//termino = hayCuatroEnLinea();
+		
+		return termino;
 	}
 
 	/**
@@ -111,6 +131,15 @@ public class CuatroEnLinea {
 	 */
 	public String obtenerGanador() {
 		
-		return null;
+		String ganador="mariano tugnarelli";
+		if (hayGanador()) {
+			if (esPrimerJugador) {
+				ganador = jugadorRojo;
+			} else {
+				ganador = jugadorAmarillo;
+			}
+		}
+		
+		return ganador;
 	}
 }
