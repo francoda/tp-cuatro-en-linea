@@ -170,9 +170,9 @@ public class CuatroEnLinea {
 		
 		if (hayCuatroEnLinea) {
 			if (esPrimerJugador) {
-				nombreGanador = jugadorRojo;
+				nombreGanador = this.jugadorRojo;
 			} else {
-				nombreGanador = jugadorAmarillo;
+				nombreGanador = this.jugadorAmarillo;
 			}
 		}
 		
@@ -262,6 +262,8 @@ public class CuatroEnLinea {
 	 * post: devuelve el nombre del jugador que ganó el juego.
 	 */
 	public String obtenerGanador() {	
+		
 		return nombreGanador;
+		
 	}
 }

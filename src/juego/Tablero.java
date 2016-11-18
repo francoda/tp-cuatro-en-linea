@@ -151,9 +151,13 @@ public class Tablero {
 		Text textoResultado;
 		Font fuente = new Font(40.0);
 		
-		if (juego.hayGanador()) {
+		if (juego.hayGanador() && juego.obtenerGanador().equals("Mariano")) {
 		
-			textoResultado = new Text("Ganó el jugador " + juego.obtenerGanador());
+			textoResultado = new Text("Ganó Mariano, se puso contento y nos probó a todos."  + System.lineSeparator() + "Por ende, ¡ganamos todos!");
+				
+		} else if (juego.hayGanador()) {
+			
+				textoResultado = new Text("Ganó el jugador " + juego.obtenerGanador());
 			
 		} else {
 			
