@@ -11,10 +11,11 @@ package juego;
 public class CuatroEnLinea {
 
 	private Casillero[][] tablero;
-	private boolean esPrimerJugador;
+	private boolean esPrimerJugador = true;
 	private String jugadorRojo;
 	private String jugadorAmarillo;
-	private String ganador = null;
+	private String nombreGanador = null;
+	private boolean ganador = false;
 	private int[] ultimoCasillero = {0,0};
 	
 	/**
@@ -83,21 +84,32 @@ public class CuatroEnLinea {
 	public void soltarFicha(int columna) {
 		int ultimaFilaVacia = tablero.length - 1;
 		columna--;
-		//Busco desde abajo asta arriba la fila vacia
-		while (ultimaFilaVacia > 0 &&tablero[ultimaFilaVacia][columna] != Casillero.VACIO)  {
-			ultimaFilaVacia--;
-		}
-		//Cambio la casilla si esta vacia
-		if (ultimaFilaVacia >= 0 && tablero[0][columna]==Casillero.VACIO) {
-			if (esPrimerJugador) {
-				tablero[ultimaFilaVacia][columna] = Casillero.ROJO;
-			} else {
-				tablero[ultimaFilaVacia][columna] = Casillero.AMARILLO;
+		
+		 //Cambia la primera ficha vacía en 'columna' si el juego aún no terminó
+		if (!termino()){
+			
+			//Busco desde abajo hasta arriba la fila vacía
+			while (ultimaFilaVacia > 0 && tablero[ultimaFilaVacia][columna] != Casillero.VACIO)  {
+				ultimaFilaVacia--;
 			}
-			//Cargo la ultima casilla y cambio de jugador
-			ultimoCasillero[0] = ultimaFilaVacia;
-			ultimoCasillero[1] = columna;			
-			esPrimerJugador = !esPrimerJugador;
+			
+			//Cambio el casillero si esta vacío
+			if (ultimaFilaVacia >= 0 && tablero[0][columna] == Casillero.VACIO) {
+				if (esPrimerJugador) {
+					tablero[ultimaFilaVacia][columna] = Casillero.ROJO;
+				} else {
+					tablero[ultimaFilaVacia][columna] = Casillero.AMARILLO;
+				}
+				
+				//Guardo el último casillero y cambio de jugador
+				ultimoCasillero[0] = ultimaFilaVacia;
+				ultimoCasillero[1] = columna;
+				
+				//Si el juego no terminó con la ficha colocada, cambio el jugador
+				if (!termino()){
+					esPrimerJugador = !esPrimerJugador;
+				}
+			}
 		}
 	}
 	
@@ -107,37 +119,42 @@ public class CuatroEnLinea {
 	 */
 	public boolean termino() {
 		int i=0;
-		boolean termino = false;
-		//verifica la ultima fila por empate		
-		while (i<tablero[0].length && tablero[0][i]!=Casillero.VACIO){			
-			if (i==tablero[0].length-1){
-				termino = !termino;
+		boolean finalizo = false;
+
+		//verifica la última fila por empate		
+		while (i<tablero[0].length && tablero[0][i] != Casillero.VACIO){			
+			if (i == tablero[0].length-1){
+				finalizo = !finalizo;
 			}
 			i++;
 		}
-		//verifica si hay 4 en linea en Fila, Columna, DiagonalAsendente, DiagonalDesendente
-		if (!termino && hayCuatroEnLinea(obtenerFila())){
-			termino = !termino;
-		} else if (!termino && hayCuatroEnLinea(obtenerColumna())) {
-			termino = !termino;
-		} else if (!termino && hayCuatroEnLinea(obtenerDiagonalAsendente())) {
-			termino = !termino;
-		} else if (!termino && hayCuatroEnLinea(obtenerDiagonalDesendente())) {
-			termino = !termino;
+
+		//verifica si hay 4 en línea en Fila, Columna, DiagonalAsendente, DiagonalDesendente
+		if (!finalizo && hayCuatroEnLinea(obtenerFila())){
+			finalizo = !finalizo;
+		} else if (!finalizo && hayCuatroEnLinea(obtenerColumna())) {
+			finalizo = !finalizo;
+		} else if (!finalizo && hayCuatroEnLinea(obtenerDiagonalAsendente())) {
+			finalizo = !finalizo;
+		} else if (!finalizo && hayCuatroEnLinea(obtenerDiagonalDesendente())) {
+			finalizo = !finalizo;
 		}
 		
-		return termino;
+		return finalizo;
 	}
 
 	/**
 	 * post: indica si se realizo un 4 en linea en los casilleros pasados.
 	 */
 	private boolean hayCuatroEnLinea(Casillero[] casilleros) {
+		
+		//Se inicializan variables
 		boolean hayCuatroEnLinea = false;
 		Casillero ultimoEstado = Casillero.VACIO;
 		int contador = 0;
 		int i = 0;
 		
+		//
 		while (i < casilleros.length && !hayCuatroEnLinea) {
 			if (casilleros[i] == ultimoEstado) {
 				contador++;
@@ -153,9 +170,9 @@ public class CuatroEnLinea {
 		
 		if (hayCuatroEnLinea) {
 			if (esPrimerJugador) {
-				ganador = jugadorRojo;
+				nombreGanador = jugadorRojo;
 			} else {
-				ganador = jugadorAmarillo;
+				nombreGanador = jugadorAmarillo;
 			}
 		}
 		
@@ -179,7 +196,8 @@ public class CuatroEnLinea {
 	private Casillero[] obtenerDiagonalDesendente() {
 		Casillero[] casilleros = null;
 		int aux = modulo(ultimoCasillero[0] - ultimoCasillero[1]);
-		//Creo el array para devolver con la cantidad maxima posible de valores dependiendo del tamano del tablero
+		
+		//Creo el array para devolver con la cantidad máxima posible de valores dependiendo del tamaño del tablero
 		if (tablero.length < tablero[0].length) {
 			casilleros = new Casillero[tablero.length - aux];
 		} else {
@@ -203,7 +221,8 @@ public class CuatroEnLinea {
 		int aux = ultimoCasillero[0] + ultimoCasillero[1];
 		int indexDiagonalIncio = 0;
 		int indexDiagonalFinal = aux;
-		//aux es la suma de las cordenadas de la la ultima ficha, es un valor que se repite en toda la diagonal
+		
+		//aux es la suma de las coordenadas de la última ficha, es un valor que se repite en toda la diagonal
 		if (aux > tablero.length) {
 			indexDiagonalIncio = modulo(aux - tablero.length + 1);
 		}
@@ -232,7 +251,10 @@ public class CuatroEnLinea {
 	 * post: indica si el juego terminó y tiene un ganador.
 	 */
 	public boolean hayGanador() {
-		return ganador == null;
+		if (nombreGanador != null){
+			this.ganador = !ganador;
+		}
+		return this.ganador;
 	}
 
 	/**
@@ -240,6 +262,6 @@ public class CuatroEnLinea {
 	 * post: devuelve el nombre del jugador que ganó el juego.
 	 */
 	public String obtenerGanador() {	
-		return ganador;
+		return nombreGanador;
 	}
 }
