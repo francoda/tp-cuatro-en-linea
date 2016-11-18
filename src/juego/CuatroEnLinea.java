@@ -1,7 +1,7 @@
 package juego;
 
 /**
- * Juego Cuatro en Lí­nea
+ * Juego Cuatro en LÃ­Â­nea
  * 
  * Reglas:
  * 
@@ -23,7 +23,7 @@ public class CuatroEnLinea {
 	 * post: empieza el juego entre el jugador que tiene fichas rojas, identificado como 
 	 * 		 'jugadorRojo' y el jugador que tiene fichas amarillas, identificado como
 	 * 		 'jugadorAmarillo'. 
-	 * 		 Todo el tablero está vacío.
+	 * 		 Todo el tablero estÃ¡ vacÃ­o.
 	 * 
 	 * @param filas : cantidad de filas que tiene el tablero.
 	 * @param columnas : cantidad de columnas que tiene el tablero.
@@ -34,6 +34,10 @@ public class CuatroEnLinea {
 
 		if (filas < 4 || columnas < 4) {
 			throw new Error("Medidas de tablero incorrectas");
+		}
+		
+		if (jugadorRojo.equals("") || jugadorAmarillo.equals("")){
+			throw new Error ("Ambos jugadores deben tener un nombre");
 		}
 		
 		tablero = new Casillero[filas][columnas];
@@ -49,23 +53,23 @@ public class CuatroEnLinea {
 	}
 
 	/**
-	 * post: devuelve la cantidad máxima de fichas que se pueden apilar en el tablero.
+	 * post: devuelve la cantidad mÃ¡xima de fichas que se pueden apilar en el tablero.
 	 */
 	public int contarFilas() {
 		return tablero.length;
 	}
 
 	/**
-	 * post: devuelve la cantidad máxima de fichas que se pueden alinear en el tablero.
+	 * post: devuelve la cantidad mÃ¡xima de fichas que se pueden alinear en el tablero.
 	 */
 	public int contarColumnas() {
 		return tablero[0].length;
 	}
 
 	/**
-	 * pre : fila está en el intervalo [1, contarFilas()],
-	 * 		 columnas está en el intervalo [1, contarColumnas()].
-	 * post: indica qué ocupa el casillero en la posición dada por fila y columna.
+	 * pre : fila estÃ¡ en el intervalo [1, contarFilas()],
+	 * 		 columnas estÃ¡ en el intervalo [1, contarColumnas()].
+	 * post: indica quÃ© ocupa el casillero en la posiciÃ³n dada por fila y columna.
 	 * 
 	 * @param fila
 	 * @param columna
@@ -75,8 +79,8 @@ public class CuatroEnLinea {
 	}
 	
 	/**
-	 * pre : el juego no terminó, columna está en el intervalo [1, contarColumnas()]
-	 * 		 y aún queda uxn Casillero.VACIO en la columna indicada. 
+	 * pre : el juego no terminÃ³, columna estÃ¡ en el intervalo [1, contarColumnas()]
+	 * 		 y aÃºn queda uxn Casillero.VACIO en la columna indicada. 
 	 * post: deja caer una ficha en la columna indicada.
 	 * 
 	 * @param columna
@@ -85,15 +89,15 @@ public class CuatroEnLinea {
 		int ultimaFilaVacia = tablero.length - 1;
 		columna--;
 		
-		 //Cambia la primera ficha vacía en 'columna' si el juego aún no terminó
+		 //Cambia la primera ficha vacÃ­a en 'columna' si el juego aÃºn no terminÃ³
 		if (!termino()){
 			
-			//Busco desde abajo hasta arriba la fila vacía
+			//Busco desde abajo hasta arriba la fila vacÃ­a
 			while (ultimaFilaVacia > 0 && tablero[ultimaFilaVacia][columna] != Casillero.VACIO)  {
 				ultimaFilaVacia--;
 			}
 			
-			//Cambio el casillero si esta vacío
+			//Cambio el casillero si esta vacÃ­o
 			if (ultimaFilaVacia >= 0 && tablero[0][columna] == Casillero.VACIO) {
 				if (esPrimerJugador) {
 					tablero[ultimaFilaVacia][columna] = Casillero.ROJO;
@@ -101,11 +105,11 @@ public class CuatroEnLinea {
 					tablero[ultimaFilaVacia][columna] = Casillero.AMARILLO;
 				}
 				
-				//Guardo el último casillero y cambio de jugador
+				//Guardo el Ãºltimo casillero y cambio de jugador
 				ultimoCasillero[0] = ultimaFilaVacia;
 				ultimoCasillero[1] = columna;
 				
-				//Si el juego no terminó con la ficha colocada, cambio el jugador
+				//Si el juego no terminÃ³ con la ficha colocada, cambio el jugador
 				if (!termino()){
 					esPrimerJugador = !esPrimerJugador;
 				}
@@ -114,14 +118,14 @@ public class CuatroEnLinea {
 	}
 	
 	/**
-	 * post: indica si el juego terminó porque uno de los jugadores
-	 * 		 ganó o no existen casilleros vacíos.
+	 * post: indica si el juego terminÃ³ porque uno de los jugadores
+	 * 		 ganÃ³ o no existen casilleros vacÃ­os.
 	 */
 	public boolean termino() {
 		int i=0;
 		boolean finalizo = false;
 
-		//verifica la última fila por empate		
+		//verifica la Ãºltima fila por empate		
 		while (i<tablero[0].length && tablero[0][i] != Casillero.VACIO){			
 			if (i == tablero[0].length-1){
 				finalizo = !finalizo;
@@ -129,7 +133,7 @@ public class CuatroEnLinea {
 			i++;
 		}
 
-		//verifica si hay 4 en línea en Fila, Columna, DiagonalAsendente, DiagonalDesendente
+		//verifica si hay 4 en lÃ­nea en Fila, Columna, DiagonalAsendente, DiagonalDesendente
 		if (!finalizo && hayCuatroEnLinea(obtenerFila())){
 			finalizo = !finalizo;
 		} else if (!finalizo && hayCuatroEnLinea(obtenerColumna())) {
@@ -197,7 +201,7 @@ public class CuatroEnLinea {
 		Casillero[] casilleros = null;
 		int aux = modulo(ultimoCasillero[0] - ultimoCasillero[1]);
 		
-		//Creo el array para devolver con la cantidad máxima posible de valores dependiendo del tamaño del tablero
+		//Creo el array para devolver con la cantidad mÃ¡xima posible de valores dependiendo del tamaÃ±o del tablero
 		if (tablero.length < tablero[0].length) {
 			casilleros = new Casillero[tablero.length - aux];
 		} else {
@@ -222,7 +226,7 @@ public class CuatroEnLinea {
 		int indexDiagonalIncio = 0;
 		int indexDiagonalFinal = aux;
 		
-		//aux es la suma de las coordenadas de la última ficha, es un valor que se repite en toda la diagonal
+		//aux es la suma de las coordenadas de la Ãºltima ficha, es un valor que se repite en toda la diagonal
 		if (aux > tablero.length) {
 			indexDiagonalIncio = modulo(aux - tablero.length + 1);
 		}
@@ -248,7 +252,7 @@ public class CuatroEnLinea {
 	}
 
 	/**
-	 * post: indica si el juego terminó y tiene un ganador.
+	 * post: indica si el juego terminÃ³ y tiene un ganador.
 	 */
 	public boolean hayGanador() {
 		if (nombreGanador != null){
@@ -258,8 +262,8 @@ public class CuatroEnLinea {
 	}
 
 	/**
-	 * pre : el juego terminó.
-	 * post: devuelve el nombre del jugador que ganó el juego.
+	 * pre : el juego terminÃ³.
+	 * post: devuelve el nombre del jugador que ganÃ³ el juego.
 	 */
 	public String obtenerGanador() {	
 		
