@@ -143,10 +143,4 @@ public class pruebasCuatroEnLinea {
 	}
 
 	
-	
-
-	
-	
-	
-
 }
