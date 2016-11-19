@@ -4,8 +4,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
 /**
- * Acción ejecutada al presionar un botón para soltar una ficha en 
- * una columna determinada.
+ * Acción ejecutada al presionar un botón para soltar una ficha en una columna
+ * determinada.
  * 
  */
 public class SoltarFicha implements EventHandler<ActionEvent> {
@@ -15,17 +15,18 @@ public class SoltarFicha implements EventHandler<ActionEvent> {
 	private int columna;
 
 	/**
-	 * post: asocia la acción de soltar una ficha en el juego 'cuatroEnLinea' en la 
-	 * 		 columna 'columnaSeleccionada' del tablero 'tableroCuatroEnLinea'.
+	 * post: asocia la acción de soltar una ficha en el juego 'cuatroEnLinea' en
+	 * la columna 'columnaSeleccionada' del tablero 'tableroCuatroEnLinea'.
 	 * 
 	 * @param tableroCuatroEnLinea
 	 * @param cuatroEnLinea
 	 * @param columnaSeleccionada
 	 */
-	public SoltarFicha(Tablero tableroCuatroEnLinea, CuatroEnLinea cuatroEnLinea, int columnaSeleccionada) {
+	public SoltarFicha(Tablero tableroCuatroEnLinea,
+			CuatroEnLinea cuatroEnLinea, int columnaSeleccionada) {
 
 		tablero = tableroCuatroEnLinea;
-		juego = cuatroEnLinea; 
+		juego = cuatroEnLinea;
 		columna = columnaSeleccionada;
 	}
 
@@ -33,11 +34,11 @@ public class SoltarFicha implements EventHandler<ActionEvent> {
 	public void handle(ActionEvent evento) {
 
 		juego.soltarFicha(columna);
-		
+
 		tablero.dibujar();
-		
+
 		if (juego.termino()) {
-			
+
 			tablero.mostrarResultado();
 		}
 	}

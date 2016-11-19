@@ -2,7 +2,7 @@ package juego;
 
 public enum Casillero {
 
-	VACIO,
-	ROJO,
-	AMARILLO
+	VACIO, 
+	CASILLERO1, 
+	CASILLERO2
 }

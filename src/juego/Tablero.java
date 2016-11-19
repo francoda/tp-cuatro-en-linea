@@ -7,14 +7,14 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
- * Representación gráfica del Tablero del Juego Cuatro en Lí­nea.
+ * Representación gráfica del Tablero del Juego Cuatro en Línea.
  * 
  */
 public class Tablero {
@@ -22,7 +22,7 @@ public class Tablero {
 	private static final int ALTO_FILA = 80;
 	private static final int ANCHO_COLUMNA = 80;
 	private static final int ALTURA_BOTON = 40;
-	private static final double RADIO = Math.min(ALTO_FILA - 1, ANCHO_COLUMNA - 1) / 2;
+	private static final double LADO = Math.min(ALTO_FILA - 1, ANCHO_COLUMNA - 1) ;
 	
 	private CuatroEnLinea juego;
 	private GridPane grilla;
@@ -88,7 +88,7 @@ public class Tablero {
 
 				Casillero casillero = juego.obtenerCasillero(fila, columna);
 				
-				Circle dibujoCasillero = dibujarCasillero(casillero);
+				Rectangle dibujoCasillero = dibujarCasillero(casillero);
 				
 				grilla.add(dibujoCasillero, columna - 1, fila);
 			}
@@ -101,9 +101,9 @@ public class Tablero {
 	 * @param casillero
 	 * @return representación gráfica del Casillero.
 	 */
-	private Circle dibujarCasillero(Casillero casillero) {
+	private Rectangle dibujarCasillero(Casillero casillero) {
 		
-		Circle dibujoCasillero = new Circle(RADIO, obtenerPintura(casillero));
+		Rectangle dibujoCasillero = new Rectangle(LADO, LADO, obtenerPintura(casillero));
 		
 		dibujoCasillero.setStroke(new Color(0.5, 0.5, 0.5, 1.0));
 		dibujoCasillero.setScaleX(0.95);
@@ -123,16 +123,16 @@ public class Tablero {
 
 		switch (casillero) {
 		
-			case AMARILLO:
-				pintura = Color.YELLOW;
+			case CASILLERO2:
+				pintura = Color.rgb(208, 187, 158);
 				break;
 				
-			case ROJO:
-				pintura = Color.RED;
+			case CASILLERO1:
+				pintura = Color.rgb(241, 220, 198);
 				break;
 				
 			default:
-				pintura = Color.WHITE;
+				pintura = Color.rgb(246, 255, 240);
 		}
 
 		return pintura;

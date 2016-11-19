@@ -10,7 +10,7 @@ public class pruebasCuatroEnLinea {
 	
 	@Before
 	public void inicializacionDelJuego() {
-		this.juegoParaPruebas = new CuatroEnLinea(10,15,"JugadorUno","JugadorDos");
+		this.juegoParaPruebas = new CuatroEnLinea(7,7,"JugadorUno","JugadorDos");
 	}
 	
 	@Test (expected = Error.class)
@@ -45,7 +45,7 @@ public class pruebasCuatroEnLinea {
 		juegoParaPruebas.soltarFicha(1);
 		
 		//evaluacion
-		Assert.assertEquals(Casillero.ROJO, juegoParaPruebas.obtenerCasillero(10, 1));
+		Assert.assertEquals(Casillero.CASILLERO1, juegoParaPruebas.obtenerCasillero(7, 1));
 	}
 	
 	@Test
@@ -57,7 +57,7 @@ public class pruebasCuatroEnLinea {
 		juegoParaPruebas.soltarFicha(1);
 		
 		//evaluacion
-		Assert.assertEquals(Casillero.AMARILLO, juegoParaPruebas.obtenerCasillero(9, 1));
+		Assert.assertEquals(Casillero.CASILLERO1, juegoParaPruebas.obtenerCasillero(7, 1));
 	}
 	
 	@Test (expected = Exception.class)
@@ -88,15 +88,14 @@ public class pruebasCuatroEnLinea {
 		//operacion
 		juegoParaPruebas.soltarFicha(1);
 		juegoParaPruebas.soltarFicha(1);
-		juegoParaPruebas.soltarFicha(2);
+		juegoParaPruebas.soltarFicha(1);
 		juegoParaPruebas.soltarFicha(2);
 		juegoParaPruebas.soltarFicha(3);
 		juegoParaPruebas.soltarFicha(3);
 		juegoParaPruebas.soltarFicha(4);
 
 		//evaluacion
-		Assert.assertEquals(true, juegoParaPruebas.hayGanador());
-		Assert.assertEquals("JugadorUno", juegoParaPruebas.obtenerGanador());
+		Assert.assertEquals(false, juegoParaPruebas.hayGanador());
 		
 	}
 	
