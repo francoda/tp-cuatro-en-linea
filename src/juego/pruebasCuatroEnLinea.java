@@ -136,11 +136,11 @@ public class pruebasCuatroEnLinea {
 	
 			// operacion
 			for (int columna = 0; columna < 4; columna++) {
-				for (int i = 0; i < 3 || (columna == 3 && i == 3); i++) {
+				for (int fila = 0; fila < 4 || (columna == 4 && fila == 4); fila++) {
 					juego.soltarFicha(columna + 1);
 				}
-			}			
-	
+			}
+
 			// evaluacion
 			Assert.assertEquals(true, juego.hayGanador());
 			Assert.assertEquals("JugadorUno", juego.obtenerGanador());
