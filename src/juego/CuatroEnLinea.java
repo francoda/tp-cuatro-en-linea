@@ -233,6 +233,8 @@ public class CuatroEnLinea {
 
 	private Casillero[] obtenerDiagonalAsendente() {
 		Casillero[] casilleros = null;
+		// indexDiagonalFinal es la suma de las coordenadas de la ultima ficha,
+		// es un valor que se repite en toda la diagonal
 		int aux = ultimoCasillero[0] + ultimoCasillero[1];
 		int indexDiagonalIncio = 0;
 		int indexDiagonalFinal = aux;
