@@ -12,12 +12,14 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
 import javafx.stage.WindowEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Label;
 
 
 /**
- * Representaci√≥n gr√°fica del Tablero del Juego Cuatro en L√≠nea.
+ * RepresentaciÛn gr·fica del Tablero del Juego Cuatro en LÌnea.
  * 
  */
 public class Tablero {
@@ -49,10 +51,11 @@ public class Tablero {
 	 */
 	public void mostrar() {
 		
+		dibujarTurnoActual();
 		dibujarBotones();
 		
 		double ancho = juego.contarColumnas() * ANCHO_COLUMNA;
-		double alto = (juego.contarFilas() * ALTO_FILA) + ALTURA_BOTON;
+		double alto = (juego.contarFilas() * ALTO_FILA) + ALTURA_BOTON + LADO/3;
 		
 		Scene escena = new Scene(grilla, ancho, alto);
 
@@ -63,6 +66,27 @@ public class Tablero {
 		dibujar();
 
 		escenario.show();
+	}
+	
+	/*
+	 * post: actualiza el Tablero a partir del turno actual
+	 */
+	public void dibujarTurnoActual() {
+		Label etiquetaTurnoActual = new Label(" Turno actual:");
+
+		grilla.add(etiquetaTurnoActual, 0, 0);
+		
+		grilla.add(dibujarCasilleroTurnoActual(juego.turnoActual()), 1, 0);
+	}
+	
+	private Rectangle dibujarCasilleroTurnoActual(Casillero casillero) {
+		
+		Rectangle dibujoCasillero = new Rectangle(LADO/3, LADO/3, obtenerPintura(casillero));
+		
+		dibujoCasillero.setStroke(new Color(0.5, 0.5, 0.5, 1.0));
+		dibujoCasillero.setScaleX(0.5);
+		dibujoCasillero.setScaleY(0.5);
+		return dibujoCasillero;
 	}
 	
 	/**
@@ -77,14 +101,16 @@ public class Tablero {
 
 			botonSoltarFicha.setOnAction(new SoltarFicha(this, juego, columna));
 			botonSoltarFicha.setMinWidth(ANCHO_COLUMNA);
-			grilla.add(botonSoltarFicha, columna - 1, 0);
+			grilla.add(botonSoltarFicha, columna - 1, 1);
 		}
 	}
-	
+		
 	/**
 	 * post: actualiza el Tablero a partir del estado del juego asociado.
 	 */
 	public void dibujar() {
+		
+		dibujarTurnoActual();
 
 		for (int fila = 1; fila <= juego.contarFilas(); fila++) {
 
@@ -94,7 +120,7 @@ public class Tablero {
 				
 				Rectangle dibujoCasillero = dibujarCasillero(casillero);
 				
-				grilla.add(dibujoCasillero, columna - 1, fila);
+				grilla.add(dibujoCasillero, columna - 1, fila + 1 );
 			}
 		}
 	}
@@ -103,7 +129,7 @@ public class Tablero {
 	 * post: dibuja y devuelve el casillero dado.
 	 * 
 	 * @param casillero
-	 * @return representaci√≥n gr√°fica del Casillero.
+	 * @return representaciÛn gr·fica del Casillero.
 	 */
 	private Rectangle dibujarCasillero(Casillero casillero) {
 		
@@ -143,7 +169,7 @@ public class Tablero {
 	}
 
 	/**
-	 * pre : el juego asociado termin√≥.
+	 * pre : el juego asociado terminÛ.
 	 * post: muestra un mensaje indicando el resultado del juego.
 	 */
 	public void mostrarResultado() {
@@ -157,7 +183,7 @@ public class Tablero {
 		
 		if (juego.hayGanador() && juego.obtenerGanador().equals("Mariano")) {
 		
-			textoResultado = new Text("Gan√≥ Mariano, se puso contento y nos prob√≥ a todos."  + System.lineSeparator() + "Por ende, ¬°ganamos todos!");
+			textoResultado = new Text("GanÛ Mariano, se puso contento y nos probÛ a todos."  + System.lineSeparator() + "Por ende, °ganamos todos!");
 			Aplicacion.sonidos.Random();
 
 			//detiene sonido al cerrar la ventana
@@ -170,7 +196,7 @@ public class Tablero {
 			
 		} else if (juego.hayGanador()) {
 			
-				textoResultado = new Text("Gan√≥ el jugador " + juego.obtenerGanador());
+				textoResultado = new Text("GanÛ el jugador " + juego.obtenerGanador());
 				Aplicacion.sonidos.Terminar();
 				
 		} else {
