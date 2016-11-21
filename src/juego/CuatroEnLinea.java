@@ -1,5 +1,7 @@
 package juego;
 
+import java.io.IOException;
+
 /**
  * Juego Cuatro en LÌnea
  * 
@@ -17,6 +19,8 @@ public class CuatroEnLinea {
 	private String nombreGanador = null;
 	private boolean ganador = false;
 	private int[] ultimoCasillero = { 0, 0 };
+
+	private Sonidos sonidos;
 
 	/**
 	 * pre : 'filas' y 'columnas' son mayores o iguales a 4. post: empieza el
@@ -37,6 +41,10 @@ public class CuatroEnLinea {
 			String jugadorAmarillo) {
 
 		if (filas < 4 || columnas < 4) {
+			throw new Error("Medidas de tablero incorrectas");
+		}
+
+		if (filas > 8 || columnas > 16) {
 			throw new Error("Medidas de tablero incorrectas");
 		}
 
@@ -108,9 +116,9 @@ public class CuatroEnLinea {
 			// Cambio el casillero si esta vacio
 			if (ultimaFilaVacia >= 0 && tablero[0][columna] == Casillero.VACIO) {
 				if (esPrimerJugador) {
-					tablero[ultimaFilaVacia][columna] = Casillero.CASILLERO1;
+					tablero[ultimaFilaVacia][columna] = Casillero.ROJO;
 				} else {
-					tablero[ultimaFilaVacia][columna] = Casillero.CASILLERO2;
+					tablero[ultimaFilaVacia][columna] = Casillero.AMARILLO;
 				}
 
 				// Guardo el ultimo casillero y cambio de jugador
@@ -124,6 +132,16 @@ public class CuatroEnLinea {
 				}
 			}
 		}
+
+		try {
+			sonidos = new Sonidos(null);
+		} catch (IOException e) {
+			// TODO Bloque catch generado autom·ticamente
+			e.printStackTrace();
+		}
+
+		sonidos.sonidoSoltar();
+
 	}
 
 	/**
@@ -266,7 +284,7 @@ public class CuatroEnLinea {
 	}
 
 	/**
-	 * post: indica si el juego termin√≥ y tiene un ganador.
+	 * post: indica si el juego termina y tiene un ganador.
 	 */
 	public boolean hayGanador() {
 		if (nombreGanador != null) {
@@ -284,80 +302,93 @@ public class CuatroEnLinea {
 		return nombreGanador;
 
 	}
-	
-	private boolean hayCuatroEnLineaDos () {
-		
+
+	private boolean hayCuatroEnLineaDos() {
+
 		boolean hayCuatroEnLinea = false;
-		
+
 		/*
-		 * Me aseguro no verificar el primer turno asegurandome que ultimoCasillero no 
-		 * sea 0:0 o que tablero[tablero.length-1][0] sea distinto de Casillero.VACIO
+		 * Me aseguro no verificar el primer turno asegurandome que
+		 * ultimoCasillero no sea 0:0 o que tablero[tablero.length-1][0] sea
+		 * distinto de Casillero.VACIO
 		 */
 
-		if (this.ultimoCasillero[0] != 0 && this.ultimoCasillero[1] != 0 || tablero[tablero.length-1][0] != Casillero.VACIO){
+		if (this.ultimoCasillero[0] != 0 && this.ultimoCasillero[1] != 0
+				|| tablero[tablero.length - 1][0] != Casillero.VACIO) {
 			int fichasEnDiagonalDerecha = 1;
 
-			//seteo posicionArrayFila y posicionArrayColumna para nueva diagonal. Las posiciones son de "Jugador", NO de array
-			int posicionArrayFila = this.ultimoCasillero[0]-1;
-			int posicionArrayColumna = this.ultimoCasillero[1]+1;
-			
-			//verifico diagonal ascendenteDerecha desde coordenada ultimoCasillero
-			while (fichasEnDiagonalDerecha < 4 &&
-					posicionArrayFila >= 0 && posicionArrayColumna < tablero[0].length &&
-					tablero[posicionArrayFila][posicionArrayColumna] == tablero[ultimoCasillero[0]][ultimoCasillero[1]]){
-				
+			// seteo posicionArrayFila y posicionArrayColumna para nueva
+			// diagonal. Las posiciones son de "Jugador", NO de array
+			int posicionArrayFila = this.ultimoCasillero[0] - 1;
+			int posicionArrayColumna = this.ultimoCasillero[1] + 1;
+
+			// verifico diagonal ascendenteDerecha desde coordenada
+			// ultimoCasillero
+			while (fichasEnDiagonalDerecha < 4
+					&& posicionArrayFila >= 0
+					&& posicionArrayColumna < tablero[0].length
+					&& tablero[posicionArrayFila][posicionArrayColumna] == tablero[ultimoCasillero[0]][ultimoCasillero[1]]) {
+
 				fichasEnDiagonalDerecha++;
 				posicionArrayFila--;
 				posicionArrayColumna++;
-				
+
 			}
-			
-			//reseteo posicionArrayFila y posicionArrayColumna para nueva diagonal. Las posiciones son de "Jugador", NO de array
-			posicionArrayFila = this.ultimoCasillero[0]+1;
-			posicionArrayColumna = this.ultimoCasillero[1]-1;
-			
-			//verifico diagonal descendenteIzquierda desde coordenada ultimoCasillero
-			while (fichasEnDiagonalDerecha < 4 &&
-					posicionArrayFila < tablero.length && posicionArrayColumna >= 0 &&
-					tablero[posicionArrayFila][posicionArrayColumna] == tablero[ultimoCasillero[0]][ultimoCasillero[1]]){
+
+			// reseteo posicionArrayFila y posicionArrayColumna para nueva
+			// diagonal. Las posiciones son de "Jugador", NO de array
+			posicionArrayFila = this.ultimoCasillero[0] + 1;
+			posicionArrayColumna = this.ultimoCasillero[1] - 1;
+
+			// verifico diagonal descendenteIzquierda desde coordenada
+			// ultimoCasillero
+			while (fichasEnDiagonalDerecha < 4
+					&& posicionArrayFila < tablero.length
+					&& posicionArrayColumna >= 0
+					&& tablero[posicionArrayFila][posicionArrayColumna] == tablero[ultimoCasillero[0]][ultimoCasillero[1]]) {
 				fichasEnDiagonalDerecha++;
 				posicionArrayFila++;
 				posicionArrayColumna--;
 			}
-			
+
 			int fichasEnDiagonalIzquierda = 1;
-			
-			//reseteo posicionArrayFila y posicionArrayColumna para nueva diagonal. Las posiciones son de "Jugador", NO de array
-			posicionArrayFila = this.ultimoCasillero[0]-1;
-			posicionArrayColumna = this.ultimoCasillero[1]-1;
-			
-			//verifico diagonal ascendenteIzquierda desde coordenada ultimoCasillero
-			while (fichasEnDiagonalIzquierda < 4 &&
-					posicionArrayFila >= 0 && posicionArrayColumna >= 0 &&
-					tablero[posicionArrayFila][posicionArrayColumna] == tablero[ultimoCasillero[0]][ultimoCasillero[1]]){
+
+			// reseteo posicionArrayFila y posicionArrayColumna para nueva
+			// diagonal. Las posiciones son de "Jugador", NO de array
+			posicionArrayFila = this.ultimoCasillero[0] - 1;
+			posicionArrayColumna = this.ultimoCasillero[1] - 1;
+
+			// verifico diagonal ascendenteIzquierda desde coordenada
+			// ultimoCasillero
+			while (fichasEnDiagonalIzquierda < 4
+					&& posicionArrayFila >= 0
+					&& posicionArrayColumna >= 0
+					&& tablero[posicionArrayFila][posicionArrayColumna] == tablero[ultimoCasillero[0]][ultimoCasillero[1]]) {
 				fichasEnDiagonalIzquierda++;
 				posicionArrayFila--;
 				posicionArrayColumna--;
 			}
-			
-			//reseteo posicionArrayFila y posicionArrayColumna para nueva diagonal. Las posiciones son de "Jugador", NO de array
-			posicionArrayFila = this.ultimoCasillero[0]+1;
-			posicionArrayColumna = this.ultimoCasillero[1]+1;
-			
-			//verifico diagonal descendenteDerecha desde coordenada ultimoCasillero
-			while (fichasEnDiagonalIzquierda < 4 &&
-					posicionArrayFila < tablero.length && posicionArrayColumna < tablero[0].length &&
-					tablero[posicionArrayFila][posicionArrayColumna] == tablero[ultimoCasillero[0]][ultimoCasillero[1]]){
+
+			// reseteo posicionArrayFila y posicionArrayColumna para nueva
+			// diagonal. Las posiciones son de "Jugador", NO de array
+			posicionArrayFila = this.ultimoCasillero[0] + 1;
+			posicionArrayColumna = this.ultimoCasillero[1] + 1;
+
+			// verifico diagonal descendenteDerecha desde coordenada
+			// ultimoCasillero
+			while (fichasEnDiagonalIzquierda < 4
+					&& posicionArrayFila < tablero.length
+					&& posicionArrayColumna < tablero[0].length
+					&& tablero[posicionArrayFila][posicionArrayColumna] == tablero[ultimoCasillero[0]][ultimoCasillero[1]]) {
 				fichasEnDiagonalIzquierda++;
 				posicionArrayFila++;
 				posicionArrayColumna++;
 			}
-			
-			
+
 			if (fichasEnDiagonalIzquierda == 4 || fichasEnDiagonalDerecha == 4) {
 				hayCuatroEnLinea = true;
 			}
-			
+
 			if (hayCuatroEnLinea) {
 				if (esPrimerJugador) {
 					nombreGanador = this.jugadorRojo;
@@ -366,8 +397,8 @@ public class CuatroEnLinea {
 				}
 			}
 		}
-		
+
 		return hayCuatroEnLinea;
-		
+
 	}
 }

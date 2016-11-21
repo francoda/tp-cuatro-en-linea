@@ -1,5 +1,7 @@
 package juego;
 
+import java.io.IOException;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
@@ -13,6 +15,8 @@ public class SoltarFicha implements EventHandler<ActionEvent> {
 	private Tablero tablero;
 	private CuatroEnLinea juego;
 	private int columna;
+	
+	private Sonidos sonidos;
 
 	/**
 	 * post: asocia la acción de soltar una ficha en el juego 'cuatroEnLinea' en
@@ -28,6 +32,15 @@ public class SoltarFicha implements EventHandler<ActionEvent> {
 		tablero = tableroCuatroEnLinea;
 		juego = cuatroEnLinea;
 		columna = columnaSeleccionada;
+		
+		try {
+			sonidos = new Sonidos(null);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		sonidos.sonidoJugar();
+
 	}
 
 	@Override

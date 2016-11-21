@@ -1,5 +1,7 @@
 package juego;
 
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
@@ -24,13 +26,15 @@ public class Aplicacion extends Application {
 
 	private GridPane grilla;
 
-	private TextField campoNombreJugadorUno;
-	private TextField campoNombreJugadorDos;
+	private TextField campoNombreJugadorRojo;
+	private TextField campoNombreJugadorAmarillo;
 
 	private TextField campoColumnas;
 	private TextField campoFilas;
 
 	private Button botonIniciar;
+	
+	private Sonidos sonidos;
 
 	@Override
 	public void start(Stage escenarioPrincipal) {
@@ -41,6 +45,15 @@ public class Aplicacion extends Application {
 		escenarioPrincipal.setScene(escena);
 		escenarioPrincipal.setTitle(TITULO);
 		escenarioPrincipal.show();
+
+		try {
+			sonidos = new Sonidos(null);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		sonidos.sonidoIniciar();
+
 	}
 
 	private void crearGrilla() {
@@ -56,10 +69,10 @@ public class Aplicacion extends Application {
 		crearControles();
 
 		grilla.add(textoTitulo, 0, 0, 2, 1);
-		grilla.add(new Label("Jugador Uno"), 0, 1);
-		grilla.add(campoNombreJugadorUno, 1, 1);
-		grilla.add(new Label("Jugador Dos"), 0, 2);
-		grilla.add(campoNombreJugadorDos, 1, 2);
+		grilla.add(new Label("Jugador Rojo"), 0, 1);
+		grilla.add(campoNombreJugadorRojo, 1, 1);
+		grilla.add(new Label("Jugador Amarillo"), 0, 2);
+		grilla.add(campoNombreJugadorAmarillo, 1, 2);
 		grilla.add(new Label("Filas"), 0, 3);
 		grilla.add(campoFilas, 1, 3);
 		grilla.add(new Label("Columnas"), 0, 4);
@@ -72,8 +85,8 @@ public class Aplicacion extends Application {
 
 	private void crearControles() {
 
-		campoNombreJugadorUno = new TextField("Uno");
-		campoNombreJugadorDos = new TextField("Dos");
+		campoNombreJugadorRojo = new TextField("Uno");
+		campoNombreJugadorAmarillo = new TextField("Dos");
 
 		campoColumnas = new TextField("7");
 		campoFilas = new TextField("7");
@@ -89,8 +102,8 @@ public class Aplicacion extends Application {
 	 */
 	public void iniciar() {
 
-		String nombreJugadorRojo = campoNombreJugadorUno.getText();
-		String nombreJugadorAmarillo = campoNombreJugadorDos.getText();
+		String nombreJugadorRojo = campoNombreJugadorRojo.getText();
+		String nombreJugadorAmarillo = campoNombreJugadorAmarillo.getText();
 		int filas = Integer.parseInt(campoFilas.getText());
 		int columnas = Integer.parseInt(campoColumnas.getText());
 

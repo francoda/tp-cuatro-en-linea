@@ -1,5 +1,7 @@
 package juego;
 
+import java.io.IOException;
+
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -27,6 +29,8 @@ public class Tablero {
 	private CuatroEnLinea juego;
 	private GridPane grilla;
 	private Stage escenario;
+	
+	private Sonidos sonidos;
 
 	/**
 	 * post: asocia el Tablero a 'nuevoJuego' y lo inicializa a partir de su estado. 
@@ -123,11 +127,11 @@ public class Tablero {
 
 		switch (casillero) {
 		
-			case CASILLERO2:
+			case AMARILLO:
 				pintura = Color.rgb(208, 187, 158);
 				break;
 				
-			case CASILLERO1:
+			case ROJO:
 				pintura = Color.rgb(241, 220, 198);
 				break;
 				
@@ -151,17 +155,27 @@ public class Tablero {
 		Text textoResultado;
 		Font fuente = new Font(40.0);
 		
+		try {
+			sonidos = new Sonidos(null);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		if (juego.hayGanador() && juego.obtenerGanador().equals("Mariano")) {
 		
 			textoResultado = new Text("Ganó Mariano, se puso contento y nos probó a todos."  + System.lineSeparator() + "Por ende, ¡ganamos todos!");
-				
+			sonidos.sonidoRandom();
+
+			
 		} else if (juego.hayGanador()) {
 			
 				textoResultado = new Text("Ganó el jugador " + juego.obtenerGanador());
-			
+				sonidos.sonidoTerminar();
+				
 		} else {
 			
 			textoResultado = new Text("Empataron");
+			sonidos.sonidoEmpate();
 		}
 		
 		textoResultado.setFont(fuente);

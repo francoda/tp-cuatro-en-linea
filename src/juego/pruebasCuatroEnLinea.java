@@ -53,7 +53,7 @@ public class pruebasCuatroEnLinea {
 		juego7x7.soltarFicha(1);
 
 		// evaluacion
-		Assert.assertEquals(Casillero.CASILLERO1,
+		Assert.assertEquals(Casillero.ROJO,
 				juego7x7.obtenerCasillero(7, 1));
 	}
 
@@ -67,7 +67,7 @@ public class pruebasCuatroEnLinea {
 		}
 
 		// evaluacion
-		Assert.assertEquals(Casillero.CASILLERO1,
+		Assert.assertEquals(Casillero.ROJO,
 				juego7x7.obtenerCasillero(7, 1));
 	}
 
@@ -135,7 +135,7 @@ public class pruebasCuatroEnLinea {
 			// inicializacion
 	
 			// operacion
-			for (int columna = 0; columna < 4; columna++) {
+			for (int columna = 0; columna <= 4; columna++) {
 				for (int fila = 0; fila < 4 || (columna == 4 && fila == 4); fila++) {
 					juego.soltarFicha(columna + 1);
 				}
