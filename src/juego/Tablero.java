@@ -12,9 +12,12 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import javafx.event.EventHandler;
+
 
 /**
- * Representación gráfica del Tablero del Juego Cuatro en Línea.
+ * RepresentaciÃ³n grÃ¡fica del Tablero del Juego Cuatro en LÃ­nea.
  * 
  */
 public class Tablero {
@@ -100,7 +103,7 @@ public class Tablero {
 	 * post: dibuja y devuelve el casillero dado.
 	 * 
 	 * @param casillero
-	 * @return representación gráfica del Casillero.
+	 * @return representaciÃ³n grÃ¡fica del Casillero.
 	 */
 	private Rectangle dibujarCasillero(Casillero casillero) {
 		
@@ -140,7 +143,7 @@ public class Tablero {
 	}
 
 	/**
-	 * pre : el juego asociado terminó.
+	 * pre : el juego asociado terminÃ³.
 	 * post: muestra un mensaje indicando el resultado del juego.
 	 */
 	public void mostrarResultado() {
@@ -154,13 +157,20 @@ public class Tablero {
 		
 		if (juego.hayGanador() && juego.obtenerGanador().equals("Mariano")) {
 		
-			textoResultado = new Text("Ganó Mariano, se puso contento y nos probó a todos."  + System.lineSeparator() + "Por ende, ¡ganamos todos!");
+			textoResultado = new Text("GanÃ³ Mariano, se puso contento y nos probÃ³ a todos."  + System.lineSeparator() + "Por ende, Â¡ganamos todos!");
 			Aplicacion.sonidos.Random();
+
+			//detiene sonido al cerrar la ventana
+			dialogo.setOnCloseRequest(new EventHandler<WindowEvent>() {
+	        		public void handle(WindowEvent we) {
+	            			Aplicacion.sonidos.pararActual();
+	            		}
+	        	});
 
 			
 		} else if (juego.hayGanador()) {
 			
-				textoResultado = new Text("Ganó el jugador " + juego.obtenerGanador());
+				textoResultado = new Text("GanÃ³ el jugador " + juego.obtenerGanador());
 				Aplicacion.sonidos.Terminar();
 				
 		} else {
