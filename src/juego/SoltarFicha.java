@@ -35,6 +35,8 @@ public class SoltarFicha implements EventHandler<ActionEvent> {
 	public void handle(ActionEvent evento) {
 
 		juego.soltarFicha(columna);
+		
+		Aplicacion.sonidos.Soltar();
 
 		tablero.dibujar();
 

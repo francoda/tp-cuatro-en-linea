@@ -129,9 +129,6 @@ public class CuatroEnLinea {
 				}
 			}
 		}
-		
-		Aplicacion.sonidos.Soltar();
-
 	}
 
 	/**
