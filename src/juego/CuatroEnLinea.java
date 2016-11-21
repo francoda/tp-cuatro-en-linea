@@ -1,7 +1,5 @@
 package juego;
 
-import java.io.IOException;
-
 /**
  * Juego Cuatro en LÌnea
  * 
@@ -19,8 +17,6 @@ public class CuatroEnLinea {
 	private String nombreGanador = null;
 	private boolean ganador = false;
 	private int[] ultimoCasillero = { 0, 0 };
-
-	private Sonidos sonidos;
 
 	/**
 	 * pre : 'filas' y 'columnas' son mayores o iguales a 4. post: empieza el
@@ -62,6 +58,7 @@ public class CuatroEnLinea {
 
 		this.jugadorRojo = jugadorRojo;
 		this.jugadorAmarillo = jugadorAmarillo;
+		
 	}
 
 	/**
@@ -132,15 +129,8 @@ public class CuatroEnLinea {
 				}
 			}
 		}
-
-		try {
-			sonidos = new Sonidos(null);
-		} catch (IOException e) {
-			// TODO Bloque catch generado autom·ticamente
-			e.printStackTrace();
-		}
-
-		sonidos.sonidoSoltar();
+		
+		Aplicacion.sonidos.Soltar();
 
 	}
 
@@ -152,7 +142,7 @@ public class CuatroEnLinea {
 		int i = 0;
 		boolean finalizo = false;
 
-		// verifica la √∫ltima fila por empate
+		// verifica la ultima fila por empate
 		while (i < tablero[0].length && tablero[0][i] != Casillero.VACIO) {
 			if (i == tablero[0].length - 1) {
 				finalizo = !finalizo;
@@ -166,9 +156,7 @@ public class CuatroEnLinea {
 			finalizo = !finalizo;
 		} else if (!finalizo && hayCuatroEnLinea(obtenerColumna())) {
 			finalizo = !finalizo;
-		} else if (!finalizo && hayCuatroEnLinea(obtenerDiagonalAsendente())) {
-			finalizo = !finalizo;
-		} else if (!finalizo && hayCuatroEnLinea(obtenerDiagonalDesendente())) {
+		} else if (!finalizo && verificarDiagonales()) {
 			finalizo = !finalizo;
 		}
 
@@ -182,12 +170,12 @@ public class CuatroEnLinea {
 
 		// Se inicializan variables
 		boolean hayCuatroEnLinea = false;
-		Casillero ultimoEstado = Casillero.VACIO;
+		Casillero ultimoEstado = casilleros[0];
 		int contador = 0;
-		int i = 0;
+		int i = 1;
 
 		//
-		while (i < casilleros.length && !hayCuatroEnLinea) {
+		while (i < casilleros.length && !hayCuatroEnLinea && casilleros.length > 3) {
 			if (casilleros[i] == ultimoEstado) {
 				contador++;
 			} else {
@@ -225,12 +213,13 @@ public class CuatroEnLinea {
 		return casilleros;
 	}
 
-	private Casillero[] obtenerDiagonalDesendente() {
+	@Deprecated
+	private Casillero[] obtenerDiagonalDescendente() {
 		Casillero[] casilleros = null;
 		int aux = modulo(ultimoCasillero[0] - ultimoCasillero[1]);
-
 		// Creo el array para devolver con la cantidad m√°xima posible de
 		// valores dependiendo del tama√±o del tablero
+		try {
 		if (tablero.length < tablero[0].length) {
 			casilleros = new Casillero[tablero.length - aux];
 		} else {
@@ -245,33 +234,45 @@ public class CuatroEnLinea {
 			}
 			aux++;
 		}
+		} catch (Exception e) {
+			String error = e.getMessage();
+			error += error + " ";
+		}
 
 		return casilleros;
 	}
 
-	private Casillero[] obtenerDiagonalAsendente() {
+	@Deprecated
+	private Casillero[] obtenerDiagonalAscendente() {
 		Casillero[] casilleros = null;
-		// indexDiagonalFinal es la suma de las coordenadas de la ultima ficha,
+		// aux es la suma de las coordenadas de la ultima ficha,
 		// es un valor que se repite en toda la diagonal
 		int aux = ultimoCasillero[0] + ultimoCasillero[1];
-		int indexDiagonalIncio = 0;
+		int lengthCasilleros = aux + 1;
+ 		int indexDiagonalIncio = 0;
 		int indexDiagonalFinal = aux;
-
-		// aux es la suma de las coordenadas de la ultima ficha, es un valor
-		// que se repite en toda la diagonal
-		if (aux > tablero.length) {
-			indexDiagonalIncio = modulo(aux - tablero.length + 1);
-		}
+		try {
+		// aux es la suma de las coordenadas de la ultima ficha,
+		// es un valor que se repite en toda la diagonal
 		if (aux > tablero[0].length - 1) {
+			indexDiagonalIncio += aux - (tablero[0].length - 1);
 			indexDiagonalFinal = tablero[0].length - 1;
+			lengthCasilleros -= aux + 1 - tablero[0].length;			
 		}
-		casilleros = new Casillero[indexDiagonalFinal - indexDiagonalIncio + 1];
+		if (aux > tablero.length - 1) {
+			lengthCasilleros -= aux + 1 - tablero.length;
+		}
+		
+		casilleros = new Casillero[lengthCasilleros];
 		for (int i = 0; i < casilleros.length; i++) {
-			casilleros[i] = tablero[indexDiagonalFinal][indexDiagonalIncio];
+			casilleros[i] = tablero[indexDiagonalIncio][indexDiagonalFinal];
 			indexDiagonalIncio++;
 			indexDiagonalFinal--;
 		}
-
+		} catch (Exception e) {
+			String error = e.getMessage();
+			error += error + "";
+		}
 		return casilleros;
 	}
 
@@ -303,7 +304,7 @@ public class CuatroEnLinea {
 
 	}
 
-	private boolean hayCuatroEnLineaDos() {
+	private boolean verificarDiagonales() {
 
 		boolean hayCuatroEnLinea = false;
 

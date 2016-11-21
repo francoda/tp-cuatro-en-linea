@@ -1,7 +1,5 @@
 package juego;
 
-import java.io.IOException;
-
 import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
@@ -34,7 +32,7 @@ public class Aplicacion extends Application {
 
 	private Button botonIniciar;
 	
-	private Sonidos sonidos;
+	public static Sonidos sonidos;
 
 	@Override
 	public void start(Stage escenarioPrincipal) {
@@ -45,14 +43,8 @@ public class Aplicacion extends Application {
 		escenarioPrincipal.setScene(escena);
 		escenarioPrincipal.setTitle(TITULO);
 		escenarioPrincipal.show();
-
-		try {
-			sonidos = new Sonidos(null);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		sonidos.sonidoIniciar();
+		sonidos = new Sonidos();
+		sonidos.Iniciar();			
 
 	}
 

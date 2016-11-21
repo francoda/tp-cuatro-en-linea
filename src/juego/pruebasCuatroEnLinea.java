@@ -7,18 +7,24 @@ import org.junit.Test;
 public class pruebasCuatroEnLinea {
 
 	private CuatroEnLinea juego7x7;
+	private CuatroEnLinea juego4x5;
+	private CuatroEnLinea juego5x4;
 	private CuatroEnLinea juego4x6;
 	private CuatroEnLinea juego6x4;
-	private CuatroEnLinea[] todosLosTableros = new CuatroEnLinea[3];
+	private CuatroEnLinea[] todosLosTableros = new CuatroEnLinea[5];
 
 	@Before
 	public void inicializacionDelJuego() {
 		this.juego7x7 = new CuatroEnLinea(7, 7, "JugadorUno", "JugadorDos");
+		this.juego4x5 = new CuatroEnLinea(4, 5, "JugadorUno", "JugadorDos");
+		this.juego5x4 = new CuatroEnLinea(5, 4, "JugadorUno", "JugadorDos");
 		this.juego4x6 = new CuatroEnLinea(4, 6, "JugadorUno", "JugadorDos");
 		this.juego6x4 = new CuatroEnLinea(6, 4, "JugadorUno", "JugadorDos");
 		todosLosTableros[0] = juego7x7;
-		todosLosTableros[1] = juego4x6;
-		todosLosTableros[2] = juego6x4;
+		todosLosTableros[1] = juego4x5;
+		todosLosTableros[2] = juego5x4;
+		todosLosTableros[3] = juego4x6;
+		todosLosTableros[4] = juego6x4;
 	}
 
 	@Test(expected = Error.class)
