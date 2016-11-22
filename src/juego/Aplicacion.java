@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -40,6 +41,7 @@ public class Aplicacion extends Application {
 		crearGrilla();
 
 		Scene escena = new Scene(grilla, 400, 300);
+		escenarioPrincipal.getIcons().add(new Image("file:resources/icon.png"));
 		escenarioPrincipal.setScene(escena);
 		escenarioPrincipal.setTitle(TITULO);
 		escenarioPrincipal.show();

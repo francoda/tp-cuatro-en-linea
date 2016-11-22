@@ -112,8 +112,10 @@ public class pruebasCuatroEnLinea {
 			juego.soltarFicha(4);
 	
 			// evaluacion
-			Assert.assertEquals(true, juego.hayGanador());
-			Assert.assertEquals("JugadorUno", juego.obtenerGanador());
+			Assert.assertEquals("Hay ganador " + juego.contarFilas() + "x" + juego.contarColumnas(),
+					true, juego.hayGanador());
+			Assert.assertEquals("ObtenerGanador " + juego.contarFilas() + "x" + juego.contarColumnas(),
+					"JugadorUno", juego.obtenerGanador());
 		}
 	}
 
@@ -130,13 +132,15 @@ public class pruebasCuatroEnLinea {
 			}
 	
 			// evaluacion
-			Assert.assertEquals(true, juego.hayGanador());
-			Assert.assertEquals("JugadorUno", juego.obtenerGanador());
+			Assert.assertEquals("Hay ganador " + juego.contarFilas() + "x" + juego.contarColumnas(),
+					true, juego.hayGanador());
+			Assert.assertEquals("ObtenerGanador " + juego.contarFilas() + "x" + juego.contarColumnas(),
+					"JugadorUno", juego.obtenerGanador());
 		}
 	}
 
 	@Test
-	public void CuatroEnLineaDiagonalAsendenteInferiorIzquierda() {
+	public void CuatroEnLineaDiagonalAscendenteInferiorIzquierda() {
 		for(CuatroEnLinea juego : todosLosTableros) {
 			// inicializacion
 	
@@ -148,28 +152,31 @@ public class pruebasCuatroEnLinea {
 			}
 
 			// evaluacion
-			Assert.assertEquals(true, juego.hayGanador());
-			Assert.assertEquals("JugadorUno", juego.obtenerGanador());
+			Assert.assertEquals("Hay ganador " + juego.contarFilas() + "x" + juego.contarColumnas(),
+					true, juego.hayGanador());
+			Assert.assertEquals("ObtenerGanador " + juego.contarFilas() + "x" + juego.contarColumnas(),
+					"JugadorUno", juego.obtenerGanador());
 		}
 	}
 
-//	@Test
-//	public void CuatroEnLineaDiagonalAsendenteInferiorDerecha() {
-//		for(CuatroEnLinea juego : todosLosTableros) {
-//			// inicializacion
-//	
-//			// operacion
-//				
-//			for (int columna = 0; columna < 4; columna++) {
-//				for (int i = 0; i < 3 || (columna == 3 && i == 3); i++) {
-//					juego.soltarFicha(columna + 1);
-//				}
-//			}
-//	
-//			// evaluacion
-//			Assert.assertEquals(true, juego.hayGanador());
-//			Assert.assertEquals("JugadorUno", juego.obtenerGanador());
-//		}
-//	}
+	@Test
+	public void CuatroEnLineaDiagonalDescendenteInferiorDerecha() {
+		for(CuatroEnLinea juego : todosLosTableros) {
+			// inicializacion
+	
+			// operacion
+			for (int columna = 3; columna >= 0; columna--) {
+				for (int i = 0; i < 3 || (columna == 3 && i == 3); i++) {
+					juego.soltarFicha(columna + 1);
+				}
+			}
+	
+			// evaluacion
+			Assert.assertEquals("Hay ganador " + juego.contarFilas() + "x" + juego.contarColumnas(),
+					true, juego.hayGanador());
+			Assert.assertEquals("ObtenerGanador " + juego.contarFilas() + "x" + juego.contarColumnas(),
+					"JugadorUno", juego.obtenerGanador());
+		}
+	}
 
 }

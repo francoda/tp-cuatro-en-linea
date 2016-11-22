@@ -20,27 +20,27 @@ public class Sonidos {
     }
     
     public void Terminar() {
-    	reproducir("src/sonidos/Terminar.wav");
+    	reproducir("resources/Terminar.wav");
     }
     
     public void Iniciar() {
-    	reproducir("src/sonidos/Iniciar.wav");
+    	reproducir("resources/Iniciar.wav");
     }
     
     public void Jugar() {
-    	reproducir("src/sonidos/Jugar.wav");
+    	reproducir("resources/Jugar.wav");
     }
     
     public void Soltar() {
-    	reproducir("src/sonidos/Soltar.wav");
+    	reproducir("resources/Soltar.wav");
     }
     
     public void Empate() {
-    	reproducir("src/sonidos/Empate.wav");
+    	reproducir("resources/Empate.wav");
     }
     
     public void Random() {
-    	reproducir("src/sonidos/Random.wav");
+    	reproducir("resources/Random.wav");
     }
     
     private void reproducir(String archivo) {
