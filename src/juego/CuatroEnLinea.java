@@ -331,4 +331,14 @@ public class CuatroEnLinea {
 		}
 		return jugadorActual;
 	}
+
+	public String jugadorActual() {
+		String jugadorActual = null;
+		if (esPrimerJugador) {
+			jugadorActual = jugadorRojo;
+		} else {
+			jugadorActual = jugadorAmarillo;
+		}
+		return jugadorActual;
+	}
 }

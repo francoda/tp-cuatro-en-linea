@@ -5,6 +5,8 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -42,6 +44,7 @@ public class Tablero {
 		juego = nuevoJuego;
 		escenario = new Stage();
 		grilla = new GridPane();
+		grilla.setStyle("-fx-background-color: steelblue");
 
 	}
 
@@ -53,8 +56,8 @@ public class Tablero {
 		dibujarTurnoActual();
 		dibujarBotones();
 
-		double ancho = juego.contarColumnas() * ANCHO_COLUMNA;
-		double alto = (juego.contarFilas() * ALTO_FILA) + ALTURA_BOTON + RADIO / 3;
+		double ancho = juego.contarColumnas() * ANCHO_COLUMNA - 10;
+		double alto = (juego.contarFilas() * ALTO_FILA) + ALTURA_BOTON + RADIO;
 
 		Scene escena = new Scene(grilla, ancho, alto, Color.rgb(240, 240, 40));
 		escenario.setScene(escena);
@@ -71,7 +74,8 @@ public class Tablero {
 	 * post: actualiza el Tablero a partir del turno actual
 	 */
 	public void dibujarTurnoActual() {
-		Label etiquetaTurnoActual = new Label(" Turno actual:");
+		Label etiquetaTurnoActual = new Label(" Turno actual: ");
+		etiquetaTurnoActual.setTextFill(new Color(1, 1, 1, 1));
 
 		grilla.add(etiquetaTurnoActual, 0, 0);
 
@@ -82,7 +86,7 @@ public class Tablero {
 
 	private Circle dibujarCasilleroTurnoActual(Casillero casillero) {
 
-		Circle dibujoCasillero = new Circle(RADIO / 3,
+		Circle dibujoCasillero = new Circle(RADIO / 1.5,
 				obtenerPintura(casillero));
 
 		dibujoCasillero.setStroke(new Color(0, 0, 0, 0));
@@ -99,12 +103,30 @@ public class Tablero {
 
 		for (int columna = 1; columna <= juego.contarColumnas(); columna++) {
 
-			Button botonSoltarFicha = new Button("soltar");
+			Button botonSoltarFicha = new Button("", new ImageView(new Image("file:resources/flecha.png")));
 			botonSoltarFicha.setMinHeight(ALTURA_BOTON);
-
+			botonSoltarFicha.setStyle("-fx-background-color: transparent; " +
+									 	"-fx-background-radius: 5em; " +
+	                					"-fx-min-width: 40px; " +
+						                "-fx-min-height: 40px; " +
+						                "-fx-max-width: 40px; " +
+						                "-fx-max-height: 40px;");
+			botonSoltarFicha.addEventHandler(MouseEvent.MOUSE_ENTERED, 
+			    new EventHandler<MouseEvent>() {
+			        @Override public void handle(MouseEvent e) {
+			        	botonSoltarFicha.setGraphic(dibujarCasilleroTurnoActual(juego.turnoActual()));
+			        }
+			});
+			botonSoltarFicha.addEventHandler(MouseEvent.MOUSE_EXITED, 
+			    new EventHandler<MouseEvent>() {
+			        @Override public void handle(MouseEvent e) {
+			        	botonSoltarFicha.setGraphic(new ImageView(new Image("file:resources/flecha.png")));
+			        }
+			});
 			botonSoltarFicha.setOnAction(new SoltarFicha(this, juego, columna));
 			botonSoltarFicha.setMinWidth(ANCHO_COLUMNA);
 			grilla.add(botonSoltarFicha, columna - 1, 1);
+			GridPane.setHalignment(botonSoltarFicha, HPos.CENTER);
 		}
 	}
 

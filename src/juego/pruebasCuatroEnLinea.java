@@ -166,7 +166,7 @@ public class pruebasCuatroEnLinea {
 	
 			// operacion
 			for (int columna = 3; columna >= 0; columna--) {
-				for (int i = 0; i < 3 || (columna == 3 && i == 3); i++) {
+				for (int i = 0; i < 3 || (columna == 0 && i == 3); i++) {
 					juego.soltarFicha(columna + 1);
 				}
 			}

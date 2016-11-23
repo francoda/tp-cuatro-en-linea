@@ -44,6 +44,7 @@ public class Aplicacion extends Application {
 		escenarioPrincipal.getIcons().add(new Image("file:resources/icon.png"));
 		escenarioPrincipal.setScene(escena);
 		escenarioPrincipal.setTitle(TITULO);
+		escenarioPrincipal.setResizable(false);
 		escenarioPrincipal.show();
 		sonidos = new Sonidos();
 		sonidos.Iniciar();			
